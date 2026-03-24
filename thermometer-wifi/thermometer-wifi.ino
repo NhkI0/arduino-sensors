@@ -29,6 +29,7 @@ const char* ENDPOINT = "/ca9dcc0d-34c0-4391-a079-c886fcef2976";
 const int   PORT     = 80;
 
 int loopCounter = 0;
+const int OUTPUT_RATE = 20; // 1 per second of delay
 
 bool sendAT(const char* cmd, const char* expected, int timeout = 3000) {
   esp.println(cmd);
@@ -160,7 +161,7 @@ void setup()
   pinMode(DHT_PIN, INPUT_PULLUP);
   dht.begin();
   connectWiFi();
-  delay(2000);
+  delay(1000);
 }
 void loop()
 {
@@ -197,7 +198,7 @@ void loop()
   
   if (loopCounter == 0){
     postSensorData(buildPayload(tempC, humidity));
-    loopCounter = 20;
+    loopCounter = OUTPUT_RATE;
   }
   
   delay(500);
