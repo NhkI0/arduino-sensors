@@ -2,7 +2,10 @@
 #include <DHT.h>
 
 #define TEMP_PIN     A0
-#define NOMINAL_R    10000.0 
+#define SERIES_R     10000.0   // 10kΩ series resistor
+#define THERM_R0     100000.0  // thermistor resistance at 25°C (100kΩ NTC)
+#define THERM_B      3950.0    // Beta value
+#define T0           298.15    // 25°C in Kelvin
 #define DHT_PIN   6
 #define DHT_TYPE  DHT11
 
@@ -32,8 +35,10 @@ void loop()
     return;
   }
 
-  double tempK = log(NOMINAL_R * (1024.0 / raw - 1.0));
-  tempK = 1.0 / (0.001129148 + (0.000234125 + (0.0000000876741 * tempK * tempK)) * tempK);
+  // Thermistor on top: 5V → thermistor → A0 → 10kΩ → GND
+  double R = SERIES_R * (1024.0 / raw - 1.0);
+  // Beta equation
+  double tempK = 1.0 / (1.0 / T0 + (1.0 / THERM_B) * log(R / THERM_R0));
   float tempC = tempK - 273.15;
   float tempF = (tempC * 9.0) / 5.0 + 32.0;
 
@@ -48,9 +53,11 @@ void loop()
   float tempFDHT    = dht.readTemperature(true);
 
   lcd.setCursor(0, 1);
-  lcd.print("Humi:       %  ");
-  lcd.setCursor(7, 1);
-  lcd.print(humidity);
+  lcd.print("H:      R:      ");
+  lcd.setCursor(2, 1);
+  lcd.print(humidity, 0);
+  lcd.setCursor(10, 1);
+  lcd.print(raw);
 
   delay(500);
 }
