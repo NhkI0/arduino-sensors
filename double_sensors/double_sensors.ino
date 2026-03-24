@@ -47,7 +47,6 @@
 
 DHT dht(DHT_PIN, DHT_TYPE);
 
-
 void setup() {
   Serial.begin(9600);
   pinMode(DHT_PIN, INPUT_PULLUP);
@@ -98,6 +97,5 @@ void loop() {
     Serial.print(humidity, 1);
     Serial.println(F(" %"));
   }
-
   delay(READ_INTERVAL_MS);
 }
