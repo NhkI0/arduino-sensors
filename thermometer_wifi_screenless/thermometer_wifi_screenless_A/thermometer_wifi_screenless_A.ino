@@ -1,5 +1,6 @@
 #include <DHT.h>
 #include <ArduinoJson.h>
+#include <SoftwareSerial.h>
 
 // ── Thermistors ──────────────────────────────────────
 // Each thermistor needs its own 10kΩ series resistor.
@@ -16,10 +17,14 @@ const int THERM_COUNT    = sizeof(THERM_PINS) / sizeof(THERM_PINS[0]);
 #define POST_LED     3   // blinks on each POST
 
 DHT dht(DHT_PIN, DHT_TYPE);
-#define esp Serial1
 
-const char* SSID     = "Test261";
-const char* PASSWORD = "yobx5224";
+// ── FIX: Serial1 doesn't exist on Uno — use SoftwareSerial instead ──
+// Arduino Uno pin 10 = RX (connect to ESP TX)
+// Arduino Uno pin 11 = TX (connect to ESP RX via 3.3V level shifter!)
+SoftwareSerial esp(10, 11); // RX, TX
+
+const char* SSID     = "ESAIP-EVENT";
+const char* PASSWORD = "ActiveESAIP2026";
 const char* HOST     = "activesaip.thomasbechu.me";
 const char* ENDPOINT = "/temperatures";
 const int   PORT     = 80;
@@ -228,7 +233,7 @@ void postSensorData(String payload) {
 void setup()
 {
   Serial.begin(9600);
-  esp.begin(115200);
+  esp.begin(9600); 
   pinMode(WIFI_LED, OUTPUT);
   pinMode(POST_LED, OUTPUT);
   Serial.println("=== Screenless Thermometer ===");

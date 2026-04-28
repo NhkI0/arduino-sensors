@@ -18,8 +18,8 @@ const int THERM_COUNT    = sizeof(THERM_PINS) / sizeof(THERM_PINS[0]);
 DHT dht(DHT_PIN, DHT_TYPE);
 #define esp Serial1
 
-const char* SSID     = "Test261";
-const char* PASSWORD = "yobx5224";
+const char* SSID     = "ESAIP-EVENT";
+const char* PASSWORD = "ActiveESAIP2026";
 const char* HOST     = "activesaip.thomasbechu.me";
 const char* ENDPOINT = "/temperatures";
 const int   PORT     = 80;
