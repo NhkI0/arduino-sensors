@@ -35,8 +35,13 @@ ESP8266 driven with raw AT commands. Readings are POSTed roughly once a minute a
 
 ## Wiring
 
-- Variant A: ![Variant A wiring](thermometer_wifi_screenless_A/thermometer_wifi_screenless_A_bb.svg)
-- Variant E: ![Variant E wiring](thermometer_wifi_screenless_E/thermometer_wifi_screenless_E_bb.svg)
+- Variant A:  
+
+![Variant A wiring](thermometer_wifi_screenless_A/thermometer_wifi_screenless_A_bb.svg)
+
+- Variant E:
+
+![Variant E wiring](thermometer_wifi_screenless_E/thermometer_wifi_screenless_E_bb.svg)
 
 Fritzing source files (`.fzz`) are included alongside each diagram.
 
